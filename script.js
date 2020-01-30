@@ -11,17 +11,6 @@ async function readAPIcats(){
     }
 }
 
-async function readAPIcatsUser(){
-    try{
-        var response= await fetch("https://cat-fact.herokuapp.com/users");
-        var data = await response.json();
-        return data;
-    }
-    catch(error){
-        throw(error);
-    }
-}
-
 readAPIcats().then(function(data){
     arregloTotalFacts = data;
   })
@@ -30,8 +19,11 @@ readAPIcats().then(function(data){
     console.log(e);
   });
 
+ 
 //Primer funcion llamada
+
 var arregloTotalFacts;
+
 window.onload = function(){
     readAPIcats().then((data) => {
         arregloTotalFacts = data;
@@ -61,8 +53,5 @@ function actualizarFactContent(){
 }
 
 function actualizarFact(){
-   
 
 }
-
-
