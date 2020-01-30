@@ -1,5 +1,9 @@
+//Variables utilizadas a lo largo del código
 
-//Funciones para leer la API
+var arregloTotalFacts, contenedor,  arregloTotalFotos, array;
+
+//Funciones para leer las APIs y JSON
+
 async function readAPIcats(){
     try{
         var response= await fetch("https://cat-fact.herokuapp.com/facts");
@@ -11,61 +15,88 @@ async function readAPIcats(){
     }
 }
 
+async function readJSONphotos(){
+    try{
+        var response= await fetch("data/photos.json");
+        var data = await response.json();
+        return data;
+    }
+    catch(error){
+        throw(error);
+    }
+}
+
+
+//Funciones para guardar los datos de las APIs
+
+readJSONphotos().then(function(data){
+    arregloTotalFotos=data;
+})
+
+
 readAPIcats().then(function(data){
     arregloTotalFacts = data;
   })
   .catch(function(e) {
-    console.error("no se encuentra el archivo json");
+    console.error("No se encuentra el archivo json");
     console.log(e);
   });
+ 
 
  
-//Primer funcion llamada
-var arregloTotalFacts;
+//Funcion que carga los datos de la API en un arreglo (si es la primera vez que se entra a la página), si no, agarra los datos del localstorage
 
 window.onload = function(){
-  //  if(localStorage.length== 0){
-    readAPIcats().then((data) => {
-        arregloTotalFacts = data;
-        localStorage.setItem('apiDatos', JSON.stringify(this.arregloTotalFacts));
-        inicio();
-    })
-//}else{
-    inicio();
-//}
+    if(localStorage.getItem("facts")==null){
+        readAPIcats().then((data) => {
+            arregloTotalFacts = data;
+            this.setStorage();
+            this.readJSONphotos().then(this.cargarImagen);
+            inicio();
+        })
+}
+    else{
+        this.arregloTotalFacts=JSON.parse(localStorage.getItem("facts"));
+        this.readJSONphotos().then(this.cargarImagen);
+        this.inicio();
+    }
 }
 
-//LocalStorage
-var datosLocalStorage = localStorage.getItem('apiDatos');
-localStorage.setItem('apiDatos', JSON.stringify(datosLocalStorage));
-//console.log(datosLocalStorage);
+//Funciones de localStorage
 
-
-//Mostrar fact random
-function getRandom(){
-    return Math.floor(Math.random() * 205);
+function setStorage(){
+    localStorage.setItem("facts", JSON.stringify(arregloTotalFacts));
 }
 
-var array;
+//Funcion que muestra un hecho random
 
 function inicio(){
     
     i = getRandom();
-    var aux = localStorage.getItem('apiDatos');
+
+    var aux = localStorage.getItem('facts');
     var objs= JSON.parse(aux);
    // console.log("adasdasdo", objs);
-   
+    console.log(arregloTotalFacts.all[i].user.name);
+    console.log(arregloTotalFacts.all);
     actualizarFactContent();
 }
 
 //Funciones que actualizan el HTML
 function actualizarFactContent(){
-    var aux = localStorage.getItem('apiDatos');
+  
+    var aux = localStorage.getItem('facts');
     var arreglo= JSON.parse(aux);
     document.getElementById("factContent").innerHTML = arreglo.all[i].text;
     document.getElementById("user").innerHTML = arreglo.all[i].user.name.first;
 
-}
+
+// var arregloHechosNuevos =[];
+// function Hecho( nombre, hecho){
+//     this.nombre = nombre;
+//     this.hecho = hecho;
+// }
+
 
 //Funcion de agregar fact con botón
 var arregloHechosNuevos =[];
@@ -93,5 +124,25 @@ function addFact(){
 console.log('objetoObtenido: ', JSON.parse(guardado));
 }
 
+    
+//Funcion para asignar foto random de fondo
+    function cargarImagen(){ 
+        let i= numeroAleatorio(0,17);
+        contenedor= document.getElementById("content"); 
+        //let string= "img/" + numeroAleatorio(1,10)+ ".jpg";
+        //contenedor.style.backgroundImage= "url("+string+")";
+        contenedor.style.backgroundImage= "url(" +arregloTotalFotos[i]+ ")"; 
+        contenedor.style.backgroundRepeat= "no-repeat";
+        contenedor.style.backgroundSize= "900px 500px";
+    }
 
 
+
+//Funciones varias, de numeros aleatorios
+    function getRandom(){
+            return Math.floor(Math.random() * 205);
+        }
+
+    function numeroAleatorio(min, max) {
+            return Math.round(Math.random() * (max - min) + min);
+    }
