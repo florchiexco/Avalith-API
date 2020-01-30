@@ -1,4 +1,4 @@
-//Lectura de la API
+//Funciones para leer la API
 
 async function readAPIcats(){
     try{
@@ -15,7 +15,7 @@ readAPIcats().then(function(data){
     arregloTotalFacts = data;
   })
   .catch(function(e) {
-    console.error("No se encuentra el archivo json");
+console.error("No se encuentra el archivo json");
     console.log(e);
   });
 
@@ -51,8 +51,6 @@ function actualizarFactContent(){
     document.getElementById("user").innerHTML = arregloTotalFacts.all[i].user.name.first;
 
 }
-
-//Manejo de las imágenes
 
 function numeroAleatorio(min, max) {
     return Math.round(Math.random() * (max - min) + min);
