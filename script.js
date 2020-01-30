@@ -54,6 +54,41 @@ function actualizarFactContent(){
 
 }
 
+var arregloHechosNuevos =[];
+
+function Hecho( nombre, hecho){
+    this.nombre = nombre;
+    this.hecho = hecho;
+}
+
+Hecho.prototype.setHecho = function( hecho ) {
+    this.hecho = hecho;
+}
+Hecho.prototype.setName = function( name ) {
+    this.name = name;
+}
+
+function agregarFactArray(nombre, hecho){
+    var nuevoF = new Hecho();
+    nuevoF.setHecho(hecho);
+    nuevoF.setName(nombre);
+    alert("Hecho: "+ nuevoF.hecho);
+    alert("Nombre: " + nuevoF.nombre);
+   /* arregloHechosNuevos.push(nuevoF);
+    alert("nombre: "+ nuevoF.nombre);
+    
+    alert("Arreglo nuevo: " + arregloHechosNuevos[0]);
+     */       
+}
+
+
+//Funcion de agregar fact con botón
+function addFact(){
+
+    var n = document.getElementById("agregarHecho").value;
+    var f = document.getElementById("agregarNombre").value;
+    agregarFactArray(n, f);
+    //alert(document.getElementById("agregarHecho").value);
 
 //Funcion para asignar foto random de fondo
 var contenedor;
