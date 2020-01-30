@@ -50,7 +50,7 @@ window.onload = function(){
     if(localStorage.getItem("facts")==null){
         readAPIcats().then((data) => {
             arregloTotalFacts = data;
-            this.setStorage();
+            this.setStorageInicial();
             this.readJSONphotos().then(this.cargarImagen);
             inicio();
         })
@@ -64,7 +64,7 @@ window.onload = function(){
 
 //Funciones de localStorage
 
-function setStorage(){
+function setStorageInicial(){
     localStorage.setItem("facts", JSON.stringify(arregloTotalFacts));
 }
 
@@ -73,10 +73,6 @@ function setStorage(){
 function inicio(){
     
     i = getRandom();
-
-    var aux = localStorage.getItem('facts');
-    var objs= JSON.parse(aux);
-   // console.log("adasdasdo", objs);
     console.log(arregloTotalFacts.all[i].user.name);
     console.log(arregloTotalFacts.all);
     actualizarFactContent();
@@ -85,18 +81,11 @@ function inicio(){
 //Funciones que actualizan el HTML
 function actualizarFactContent(){
   
-    var aux = localStorage.getItem('facts');
-    var arreglo= JSON.parse(aux);
-    document.getElementById("factContent").innerHTML = arreglo.all[i].text;
-    document.getElementById("user").innerHTML = arreglo.all[i].user.name.first;
+    
+    document.getElementById("factContent").innerHTML = arregloTotalFacts.all[i].text;
+    document.getElementById("user").innerHTML = arregloTotalFacts.all[i].user.name.first;
 
-
-// var arregloHechosNuevos =[];
-// function Hecho( nombre, hecho){
-//     this.nombre = nombre;
-//     this.hecho = hecho;
-// }
-
+}
 
 //Funcion de agregar fact con botón
 var arregloHechosNuevos =[];
@@ -112,10 +101,6 @@ function addFact(){
         nombre :name,
         hecho : fact
     }
-    /*  alert("obj:" + nuevoHecho);
-      alert("niombre:" + nuevoHecho.nombre);
-      alert("fact:" + nuevoHecho.hecho);
-    */
     arregloHechosNuevos.push(nuevoHecho);
     1
     localStorage.setItem('usersDatos', JSON.stringify(arregloHechosNuevos));
