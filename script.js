@@ -19,26 +19,35 @@ console.error("No se encuentra el archivo json");
     console.log(e);
   });
 
+
+//Variables utilizadas a lo largo del código
+
+var arregloTotalFacts, contenedor;
  
-//Primer funcion llamada
-
-var arregloTotalFacts;
-
+//Funcion que carga los datos de la API en un arreglo (si es la primera vez que se entra a la página), si no, agarra los datos del localstorage
 
 window.onload = function(){
     this.cargarImagen();
-    readAPIcats().then((data) => {
-        arregloTotalFacts = data;
-        inicio();
-    })
+    if(localStorage.getItem("facts")==null){
+        readAPIcats().then((data) => {
+            arregloTotalFacts = data;
+            this.setStorage();
+            inicio();
+        })
+}
+    else{
+        this.arregloTotalFacts=JSON.parse(localStorage.getItem("facts"));
+        this.inicio();
+    }
 }
 
-function getRandom(){
-    return Math.floor(Math.random() * 205);
+//Funciones de localStorage
+
+function setStorage(){
+    localStorage.setItem("facts", JSON.stringify(arregloTotalFacts));
 }
-function numeroAleatorio(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
-  }
+
+//Funcion que muestra un hecho random
 
 function inicio(){
     i = getRandom();
@@ -54,48 +63,51 @@ function actualizarFactContent(){
 
 }
 
-var arregloHechosNuevos =[];
 
-function Hecho( nombre, hecho){
-    this.nombre = nombre;
-    this.hecho = hecho;
-}
+// var arregloHechosNuevos =[];
+// function Hecho( nombre, hecho){
+//     this.nombre = nombre;
+//     this.hecho = hecho;
+// }
 
-Hecho.prototype.setHecho = function( hecho ) {
-    this.hecho = hecho;
-}
-Hecho.prototype.setName = function( name ) {
-    this.name = name;
-}
+// Hecho.prototype.setHecho = function( hecho ) {
+//     this.hecho = hecho;
+// }
+// Hecho.prototype.setName = function( name ) {
+//     this.name = name;
+// }
 
-function agregarFactArray(nombre, hecho){
-    var nuevoF = new Hecho();
-    nuevoF.setHecho(hecho);
-    nuevoF.setName(nombre);
-    alert("Hecho: "+ nuevoF.hecho);
-    alert("Nombre: " + nuevoF.nombre);
-   /* arregloHechosNuevos.push(nuevoF);
-    alert("nombre: "+ nuevoF.nombre);
+// function agregarFactArray(nombre, hecho){
+//     var nuevoF = new Hecho();
+//     nuevoF.setHecho(hecho);
+//     nuevoF.setName(nombre);
+//     alert("Hecho: "+ nuevoF.hecho);
+//     alert("Nombre: " + nuevoF.nombre);  
+// }
+
+
+// //Funcion de agregar fact con botón
+//     function addFact(){
     
-    alert("Arreglo nuevo: " + arregloHechosNuevos[0]);
-     */       
-}
-
-
-//Funcion de agregar fact con botón
-function addFact(){
-
-    var n = document.getElementById("agregarHecho").value;
-    var f = document.getElementById("agregarNombre").value;
-    agregarFactArray(n, f);
-    //alert(document.getElementById("agregarHecho").value);
-
+//         var n = document.getElementById("agregarHecho").value;
+//         var f = document.getElementById("agregarNombre").value;
+//         agregarFactArray(n, f);
+//     }
+    
 //Funcion para asignar foto random de fondo
-var contenedor;
-function cargarImagen(){ 
+    function cargarImagen(){ 
         contenedor= document.getElementById("content"); 
         let string= "img/" + numeroAleatorio(1,10)+ ".jpg";
         contenedor.style.backgroundImage= "url("+string+")";
         contenedor.style.backgroundRepeat= "no-repeat";
         contenedor.style.backgroundSize= "900px 500px";
-}
+    }
+
+//Funciones varias, de numeros aleatorios
+    function getRandom(){
+            return Math.floor(Math.random() * 205);
+        }
+
+    function numeroAleatorio(min, max) {
+            return Math.round(Math.random() * (max - min) + min);
+        }
