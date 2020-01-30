@@ -59,6 +59,32 @@ h1{
 }
 
 
+
+#interaccionUsuario{
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    border: black 1px solid;
+    display: inline-block;
+}
+
+#botonAdd {
+ display: inline-block;
+}
+
+#botonAdd:hover{
+    opacity: .8;
+    display: inline-block;
+}
+
+#agregarHechoPantalla{
+    
+    border: black 1px solid;
+}
+
+
+
+
 @media handheld, screen and (min-width: 600px) and (max-width: 1023px){
 
 	#container{
