@@ -10,15 +10,21 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Cat Facts API</title>
     <script src="script.js"></script>
+    <link rel="shortcut icon" type="images/png" href="images/favicon.png"/>
 </head>
 <body>
     <section id="container">
         <header>
             <nav id="banner">
-                <h1>Cat Facts </h1>
+                <a href="index.html" id="gato"><img src="images/nav.png"></a>
+                
+                    <h1>Cat Facts </h1>
             </nav>
         </header>
-            <div id="content">
+        <button type="button"  onclick="inicio()" id="anteriorBoton"> Anterior</button>                 
+        <button type="button"  onclick="inicio()" ssc id="siguienteBoton"> Siguiente</button> 
+        
+        <div id="content">
 
                 <section id="fact">
  
@@ -27,20 +33,25 @@
             
                 </section>
             </div>
-       
+            
             <form id="interaccionUsuario">
+                <button type="button" id="botonAdd" > Agregar</button> 
               
-                <button type="button"  id="botonAdd"> Agregar</button> 
+               
                    
                     <section id="agregarHechoPantalla">
-                        <p>Agrega!</p>
-                    <input type="text" placeholder="Fact" id="agregarHecho"><br>
-                    <input type="text" placeholder="Tu nombre" id="agregarUser"><br>
-                    <input type="submit"  onclick="addFact()" value="Enviar" />
-
+                     <p>Agrega!</p>
+                     <input type="text" placeholder="Fact" id="agregarHecho"><br>
+                     <input type="text" placeholder="Name" id="agregarName"><br>
+                 
+                     <input type="submit"  onclick="addFact()" value="Enviar" />
+ 
                 </section>
             
             </form>
+        <footer>
+
+        </footer>
 
     </section>
     <div id="contenedorFoto"></div>

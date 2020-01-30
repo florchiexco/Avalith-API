@@ -1,6 +1,6 @@
 //Variables utilizadas a lo largo del código
 
-var arregloTotalFacts, contenedor,  arregloTotalFotos;
+var arregloTotalFacts, contenedor,  arregloTotalFotos, array;
 
 //Funciones para leer las APIs y JSON
 
@@ -43,8 +43,6 @@ readAPIcats().then(function(data){
   });
  
 
-
-
  
 //Funcion que carga los datos de la API en un arreglo (si es la primera vez que se entra a la página), si no, agarra los datos del localstorage
 
@@ -73,7 +71,12 @@ function setStorage(){
 //Funcion que muestra un hecho random
 
 function inicio(){
+    
     i = getRandom();
+
+    var aux = localStorage.getItem('facts');
+    var objs= JSON.parse(aux);
+   // console.log("adasdasdo", objs);
     console.log(arregloTotalFacts.all[i].user.name);
     console.log(arregloTotalFacts.all);
     actualizarFactContent();
@@ -81,10 +84,11 @@ function inicio(){
 
 //Funciones que actualizan el HTML
 function actualizarFactContent(){
-    document.getElementById("factContent").innerHTML = arregloTotalFacts.all[i].text;
-    document.getElementById("user").innerHTML = arregloTotalFacts.all[i].user.name.first;
-
-}
+  
+    var aux = localStorage.getItem('facts');
+    var arreglo= JSON.parse(aux);
+    document.getElementById("factContent").innerHTML = arreglo.all[i].text;
+    document.getElementById("user").innerHTML = arreglo.all[i].user.name.first;
 
 
 // var arregloHechosNuevos =[];
@@ -93,29 +97,33 @@ function actualizarFactContent(){
 //     this.hecho = hecho;
 // }
 
-// Hecho.prototype.setHecho = function( hecho ) {
-//     this.hecho = hecho;
-// }
-// Hecho.prototype.setName = function( name ) {
-//     this.name = name;
-// }
 
-// function agregarFactArray(nombre, hecho){
-//     var nuevoF = new Hecho();
-//     nuevoF.setHecho(hecho);
-//     nuevoF.setName(nombre);
-//     alert("Hecho: "+ nuevoF.hecho);
-//     alert("Nombre: " + nuevoF.nombre);  
-// }
+//Funcion de agregar fact con botón
+var arregloHechosNuevos =[];
+function newFact(fact, name){
+    this.fact = fact;
+    this.name = name;
+}
 
+function addFact(){
+    const fact = document.getElementById("agregarHecho").value;
+    const name = document.getElementById("agregarName").value;
+    var nuevoHecho={
+        nombre :name,
+        hecho : fact
+    }
+    /*  alert("obj:" + nuevoHecho);
+      alert("niombre:" + nuevoHecho.nombre);
+      alert("fact:" + nuevoHecho.hecho);
+    */
+    arregloHechosNuevos.push(nuevoHecho);
+    1
+    localStorage.setItem('usersDatos', JSON.stringify(arregloHechosNuevos));
+    var guardado = localStorage.getItem('usersDatos');
 
-// //Funcion de agregar fact con botón
-//     function addFact(){
-    
-//         var n = document.getElementById("agregarHecho").value;
-//         var f = document.getElementById("agregarNombre").value;
-//         agregarFactArray(n, f);
-//     }
+console.log('objetoObtenido: ', JSON.parse(guardado));
+}
+
     
 //Funcion para asignar foto random de fondo
     function cargarImagen(){ 
@@ -137,4 +145,4 @@ function actualizarFactContent(){
 
     function numeroAleatorio(min, max) {
             return Math.round(Math.random() * (max - min) + min);
-        }
+    }
