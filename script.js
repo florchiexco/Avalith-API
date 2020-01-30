@@ -21,16 +21,27 @@ readAPIcats().then(function(data){
 
  
 //Primer funcion llamada
-
 var arregloTotalFacts;
 
 window.onload = function(){
+    if(localStorage.length!= 0){
     readAPIcats().then((data) => {
         arregloTotalFacts = data;
+        localStorage.setItem('apiDatos', JSON.stringify(this.arregloTotalFacts));
         inicio();
     })
+}else{
+    inicio();
+}
 }
 
+//LocalStorage
+var datosLocalStorage = localStorage.getItem('apiDatos');
+localStorage.setItem('apiDatos', JSON.stringify(datosLocalStorage));
+console.log(datosLocalStorage);
+
+
+//Mostrar fact random
 function getRandom(){
     return Math.floor(Math.random() * 205);
 }
@@ -49,15 +60,13 @@ function actualizarFactContent(){
 
 }
 
-
+//Funcion de agregar fact con botón
 var arregloHechosNuevos =[];
 function newFact(fact, name){
     this.fact = fact;
     this.name = name;
 }
 
-
-//Funcion de agregar fact con botón
 function addFact(){
     const fact = document.getElementById("agregarHecho").value;
     const name = document.getElementById("agregarName").value;
