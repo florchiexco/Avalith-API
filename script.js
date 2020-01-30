@@ -24,21 +24,21 @@ readAPIcats().then(function(data){
 var arregloTotalFacts;
 
 window.onload = function(){
-    if(localStorage.length!= 0){
+  //  if(localStorage.length== 0){
     readAPIcats().then((data) => {
         arregloTotalFacts = data;
         localStorage.setItem('apiDatos', JSON.stringify(this.arregloTotalFacts));
         inicio();
     })
-}else{
+//}else{
     inicio();
-}
+//}
 }
 
 //LocalStorage
 var datosLocalStorage = localStorage.getItem('apiDatos');
 localStorage.setItem('apiDatos', JSON.stringify(datosLocalStorage));
-console.log(datosLocalStorage);
+//console.log(datosLocalStorage);
 
 
 //Mostrar fact random
@@ -46,17 +46,24 @@ function getRandom(){
     return Math.floor(Math.random() * 205);
 }
 
+var array;
+
 function inicio(){
+    
     i = getRandom();
-    console.log(arregloTotalFacts.all[i].user.name);
-    console.log(arregloTotalFacts.all);
+    var aux = localStorage.getItem('apiDatos');
+    var objs= JSON.parse(aux);
+   // console.log("adasdasdo", objs);
+   
     actualizarFactContent();
 }
 
 //Funciones que actualizan el HTML
 function actualizarFactContent(){
-    document.getElementById("factContent").innerHTML = arregloTotalFacts.all[i].text;
-    document.getElementById("user").innerHTML = arregloTotalFacts.all[i].user.name.first;
+    var aux = localStorage.getItem('apiDatos');
+    var arreglo= JSON.parse(aux);
+    document.getElementById("factContent").innerHTML = arreglo.all[i].text;
+    document.getElementById("user").innerHTML = arreglo.all[i].user.name.first;
 
 }
 
@@ -70,11 +77,20 @@ function newFact(fact, name){
 function addFact(){
     const fact = document.getElementById("agregarHecho").value;
     const name = document.getElementById("agregarName").value;
-      
-    var nuevoHecho = new newFact(fact, name);
-  
+    var nuevoHecho={
+        nombre :name,
+        hecho : fact
+    }
+    /*  alert("obj:" + nuevoHecho);
+      alert("niombre:" + nuevoHecho.nombre);
+      alert("fact:" + nuevoHecho.hecho);
+    */
     arregloHechosNuevos.push(nuevoHecho);
-    
+    1
+    localStorage.setItem('usersDatos', JSON.stringify(arregloHechosNuevos));
+    var guardado = localStorage.getItem('usersDatos');
+
+console.log('objetoObtenido: ', JSON.parse(guardado));
 }
 
 

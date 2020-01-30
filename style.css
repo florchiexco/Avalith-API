@@ -24,6 +24,15 @@ body{
     background-color: rgb(168, 168, 168);
 }
 
+#gato{
+    width: 70px;
+    height: 70px;
+    margin-top: 10px;
+    margin-left: 6px;
+    float: left;
+
+}
+ 
 h1{
     font-size: 25px;
 	text-align: center;
