@@ -24,7 +24,9 @@ console.error("No se encuentra el archivo json");
 
 var arregloTotalFacts;
 
+
 window.onload = function(){
+    this.cargarImagen();
     readAPIcats().then((data) => {
         arregloTotalFacts = data;
         inicio();
@@ -34,15 +36,15 @@ window.onload = function(){
 function getRandom(){
     return Math.floor(Math.random() * 205);
 }
+function numeroAleatorio(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
 
 function inicio(){
     i = getRandom();
-    console.log("adsas", i);
     console.log(arregloTotalFacts.all[i].user.name);
     console.log(arregloTotalFacts.all);
-    //alert(arregloTotalFacts.all[i].text);
     actualizarFactContent();
-    actualizarFact();
 }
 
 //Funciones que actualizan el HTML
@@ -52,15 +54,13 @@ function actualizarFactContent(){
 
 }
 
-function numeroAleatorio(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
-  }
 
-var img;
-function añadirImagen(){
-    img= document.createElement("img");
-    img.setAttribute("src", "img/" + numeroAleatorio(1,10)+ ".jpg");
-    img.setAttribute("height","250");
-    document.getElementById("contenedorFoto").appendChild(img);
+//Funcion para asignar foto random de fondo
+var contenedor;
+function cargarImagen(){ 
+        contenedor= document.getElementById("content"); 
+        let string= "img/" + numeroAleatorio(1,10)+ ".jpg";
+        contenedor.style.backgroundImage= "url("+string+")";
+        contenedor.style.backgroundRepeat= "no-repeat";
+        contenedor.style.backgroundSize= "900px 500px";
 }
-document.addEventListener("DOMContentLoaded", añadirImagen);
