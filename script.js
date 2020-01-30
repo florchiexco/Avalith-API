@@ -1,4 +1,8 @@
-//Funciones para leer la API
+//Variables utilizadas a lo largo del código
+
+var arregloTotalFacts, contenedor,  arregloTotalFotos;
+
+//Funciones para leer las APIs y JSON
 
 async function readAPIcats(){
     try{
@@ -11,32 +15,51 @@ async function readAPIcats(){
     }
 }
 
+async function readJSONphotos(){
+    try{
+        var response= await fetch("data/photos.json");
+        var data = await response.json();
+        return data;
+    }
+    catch(error){
+        throw(error);
+    }
+}
+
+
+//Funciones para guardar los datos de las APIs
+
+readJSONphotos().then(function(data){
+    arregloTotalFotos=data;
+})
+
+
 readAPIcats().then(function(data){
     arregloTotalFacts = data;
   })
   .catch(function(e) {
-console.error("No se encuentra el archivo json");
+    console.error("No se encuentra el archivo json");
     console.log(e);
   });
+ 
 
 
-//Variables utilizadas a lo largo del código
 
-var arregloTotalFacts, contenedor;
  
 //Funcion que carga los datos de la API en un arreglo (si es la primera vez que se entra a la página), si no, agarra los datos del localstorage
 
 window.onload = function(){
-    this.cargarImagen();
     if(localStorage.getItem("facts")==null){
         readAPIcats().then((data) => {
             arregloTotalFacts = data;
             this.setStorage();
+            this.readJSONphotos().then(this.cargarImagen);
             inicio();
         })
 }
     else{
         this.arregloTotalFacts=JSON.parse(localStorage.getItem("facts"));
+        this.readJSONphotos().then(this.cargarImagen);
         this.inicio();
     }
 }
@@ -96,12 +119,16 @@ function actualizarFactContent(){
     
 //Funcion para asignar foto random de fondo
     function cargarImagen(){ 
+        let i= numeroAleatorio(0,17);
         contenedor= document.getElementById("content"); 
-        let string= "img/" + numeroAleatorio(1,10)+ ".jpg";
-        contenedor.style.backgroundImage= "url("+string+")";
+        //let string= "img/" + numeroAleatorio(1,10)+ ".jpg";
+        //contenedor.style.backgroundImage= "url("+string+")";
+        contenedor.style.backgroundImage= "url(" +arregloTotalFotos[i]+ ")"; 
         contenedor.style.backgroundRepeat= "no-repeat";
         contenedor.style.backgroundSize= "900px 500px";
     }
+
+
 
 //Funciones varias, de numeros aleatorios
     function getRandom(){
