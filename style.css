@@ -34,9 +34,8 @@ h1{
     border: black 1px solid;
     margin-left: auto;
 	margin-right: auto;
-	margin-top: 100px;
-    background-image: url("https://www.lavanguardia.com/r/GODO/LV/p5/WebSite/2018/12/27/Recortada/img_econcejo_20180629-103305_imagenes_lv_terceros_istock-864379398_4_5_478678188-kGtH-U453778693892RM-992x558@LaVanguardia-Web.jpg");
-}
+    margin-top: 100px;
+   }
 
 #fact{
     width: 110%;
@@ -120,5 +119,3 @@ h1{
             position: unset;
             z-index: 1;
             float: left;
-        }
-    
