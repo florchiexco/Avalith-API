@@ -37,12 +37,9 @@ function getRandom(){
 
 function inicio(){
     i = getRandom();
-    console.log("adsas", i);
     console.log(arregloTotalFacts.all[i].user.name);
     console.log(arregloTotalFacts.all);
-    //alert(arregloTotalFacts.all[i].text);
     actualizarFactContent();
-    actualizarFact();
 }
 
 //Funciones que actualizan el HTML
@@ -52,30 +49,23 @@ function actualizarFactContent(){
 
 }
 
-function actualizarFact(){
-
-}
-
-/*
-function agregarFactArray(nombre, hecho){
-     
-    arregloHechosNuevos.push(nuevo);      
-}*/
 
 var arregloHechosNuevos =[];
-var newFact={
-    nombre:"jaz" ,
-    fact:"ada"
+function newFact(fact, name){
+    this.fact = fact;
+    this.name = name;
 }
 
-arregloHechosNuevos.push(newFact);
 
 //Funcion de agregar fact con botón
 function addFact(){
-    var n = document.getElementById("agregarHecho").value;
-    var f = document.getElementById("agregarNombre").value;
-    agregarFactArray(n, f);
-
+    const fact = document.getElementById("agregarHecho").value;
+    const name = document.getElementById("agregarName").value;
+      
+    var nuevoHecho = new newFact(fact, name);
+  
+    arregloHechosNuevos.push(nuevoHecho);
+    
 }
 
 
