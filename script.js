@@ -1,5 +1,5 @@
-
 //Funciones para leer la API
+
 async function readAPIcats(){
     try{
         var response= await fetch("https://cat-fact.herokuapp.com/facts");
@@ -15,7 +15,7 @@ readAPIcats().then(function(data){
     arregloTotalFacts = data;
   })
   .catch(function(e) {
-    console.error("no se encuentra el archivo json");
+console.error("No se encuentra el archivo json");
     console.log(e);
   });
 
@@ -52,6 +52,15 @@ function actualizarFactContent(){
 
 }
 
-function actualizarFact(){
+function numeroAleatorio(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
 
+var img;
+function añadirImagen(){
+    img= document.createElement("img");
+    img.setAttribute("src", "img/" + numeroAleatorio(1,10)+ ".jpg");
+    img.setAttribute("height","250");
+    document.getElementById("contenedorFoto").appendChild(img);
 }
+document.addEventListener("DOMContentLoaded", añadirImagen);
